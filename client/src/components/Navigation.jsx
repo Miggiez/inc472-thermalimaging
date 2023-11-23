@@ -8,15 +8,26 @@ export const Navigation = (props) => {
 
 	return (
 		<div>
-			<div className="flex justify-center items-center bg-[#28293B] h-[100px] w-screen">
+			<div className="flex justify-center md:justify-normal items-center bg-[#28293B] h-[100px] w-screen">
+				<h2 className="text-3xl font-bold text-white hidden md:block absolute left-10">
+					Pitting Corrosion
+				</h2>
+				<Link
+					className="text-white hidden md:block text-xl absolute right-10"
+					to="/"
+				>
+					Home
+				</Link>
 				<button
-					className="w-[40px] absolute left-10 block"
+					className="w-[40px] absolute left-10 block md:hidden"
 					onClick={() => setOpen(!open)}
 				>
 					<img src={open ? Close : Ham} />
 				</button>
 
-				<h2 className="text-2xl text-white font-bold">{props.pageName}</h2>
+				<h2 className="text-2xl text-white font-bold md:hidden">
+					{props.pageName}
+				</h2>
 			</div>
 			<div
 				className={`z-50 fixed h-screen w-screen flex flex-col items-center bg-white ${

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 export const Cards = (props) => {
 	return props.datas.map((data) => (
 		<div
-			className="flex justify-center items-center w-[100%] mt-4"
+			className="flex justify-center items-center w-[100%] md:w-[60%] mt-4"
 			key={data.id}
 		>
 			<Link
