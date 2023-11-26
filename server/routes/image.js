@@ -1,13 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const image = require('../services/image.js')
+const express = require("express")
+const router = express.Router()
+const image = require("../controllers/imagecontroller")
 
-router.post('/55', image.image2);
+router.get("/", async (req, res) =>
+	res.status(200).json({ message: "Everything is working" })
+)
 
+router.get("/:id", image.getImage)
 
-
-
-
-
-
-module.exports = router;
+module.exports = router
