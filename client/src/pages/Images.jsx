@@ -4,15 +4,28 @@ import { useParams } from "react-router-dom"
 export const Images = (props) => {
 	const [image, setImage] = useState({ file: "" })
 
+	const handleFetch = async () => {
+		try {
+			const res = await fetch("http://localhost:5100/55", {
+				method: "GET",
+				mode: "cors",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+			setImage(res.json())
+			console.log(res.json())
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
 	useEffect(() => {
 		props.pageName("Image")
 	}, [])
 
-	useEffect(async () => {
-		await fetch("http://localhost:5100/55", (data) => {
-			console.log(data)
-			setImage({ file: data })
-		})
+	useEffect(() => {
+		handleFetch()
 	}, [])
 
 	const { id } = useParams()
