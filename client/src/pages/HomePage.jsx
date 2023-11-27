@@ -1,30 +1,33 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { SearchBar } from "../components/Searchbar"
 import { Cards } from "../components/Cards"
 
 export const Homepage = (props) => {
+	const [data, setData] = useState([])
+
+	const handleFetch = async () => {
+		try {
+			const res = await fetch(`http://localhost:5100/images/`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+			res.json().then((data) => {
+				setData(data)
+			})
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
 	useEffect(() => {
 		props.pageName("Home")
 	}, [])
 
-	const pittingCorrosion = [
-		{
-			id: 4,
-			timeCreated: "2023-11-17:14:27:00:00",
-		},
-		{
-			id: 3,
-			timeCreated: "2023-11-17:14:27:00:00",
-		},
-		{
-			id: 2,
-			timeCreated: "2023-11-17:14:27:00:00",
-		},
-		{
-			id: 1,
-			timeCreated: "2023-11-17:14:27:00:00",
-		},
-	]
+	useEffect(() => {
+		handleFetch()
+	}, [])
 
 	return (
 		<div className="flex flex-col items-center justify-center overflow-x-hidden">
@@ -41,7 +44,7 @@ export const Homepage = (props) => {
 					Date and Time Created
 				</h2>
 			</div>
-			<Cards datas={pittingCorrosion} />
+			<Cards datas={data} />
 		</div>
 	)
 }

@@ -8,15 +8,12 @@ export const Images = (props) => {
 
 	const handleFetch = async () => {
 		try {
-			const res = await fetch(
-				`http://localhost:5100/images/656315ca545eabbf0282b1e6`,
-				{
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			)
+			const res = await fetch(`http://localhost:5100/images/${id}`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
 			res.json().then((data) => {
 				setImage({ file: data.file })
 				console.log(data.file)
