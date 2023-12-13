@@ -12,8 +12,21 @@ const getImage = async (req, res) => {
 
 const getAllImage = async (req, res) => {
 	try {
-		const image = await ThermalImage.find({}, { file: 0 })
-		res.status(200).json(image)
+		const { search } = req.body
+		if (search == "" || search == undefined) {
+			const image = await ThermalImage.find({}, { file: 0 })
+			res.status(200).json(image)
+		} else {
+			const image = await ThermalImage.find(
+				{ name: { $regex: search } },
+				{ file: 0 }
+			)
+			if (image) {
+				res.status(200).json(image)
+			} else {
+				res.status(404).json({ message: "Image not found" })
+			}
+		}
 	} catch (error) {
 		res.status(500).json({ message: error.message })
 	}
@@ -28,4 +41,14 @@ const postImage = async (req, res) => {
 	}
 }
 
-module.exports = { getImage, getAllImage, postImage }
+const deleteImage = async (req, res) => {
+	try {
+		const { id } = req.params
+		await ThermalImage.deleteOne({ _id: id })
+		res.status(200).json({ message: "successfully removed image in database" })
+	} catch (error) {
+		res.status(500).json({ message: error.message })
+	}
+}
+
+module.exports = { getImage, getAllImage, postImage, deleteImage }

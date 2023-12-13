@@ -8,7 +8,7 @@ export const Navigation = (props) => {
 
 	return (
 		<div>
-			<div className="flex justify-center md:justify-normal items-center bg-[#28293B] h-[100px] w-screen">
+			<div className="flex justify-center md:justify-normal items-center bg-[#28293B] h-[100px] w-[100%]">
 				<h2 className="text-3xl font-bold text-white hidden md:block absolute left-10">
 					Pitting Corrosion
 				</h2>

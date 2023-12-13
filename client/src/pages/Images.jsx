@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export const Images = (props) => {
-	const [image, setImage] = useState({ file: "" })
+	const navigate = useNavigate()
+	const [image, setImage] = useState({ file: "", createdAt: "" })
+	const [message, setMessage] = useState("")
 
 	const { id } = useParams()
 
@@ -15,8 +18,28 @@ export const Images = (props) => {
 				},
 			})
 			res.json().then((data) => {
-				setImage({ file: data.file })
-				console.log(data.file)
+				setImage({ file: data.file, createdAt: data.createdAt })
+			})
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	const handleDeleteImage = async (e) => {
+		e.preventDefault()
+		try {
+			const res = await fetch(
+				`http://localhost:5100/images/deleteimage/${id}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			)
+			res.json().then((data) => {
+				setMessage(data.message)
+				navigate("/")
 			})
 		} catch (err) {
 			console.log(err)
@@ -41,8 +64,14 @@ export const Images = (props) => {
 					alt=""
 				/>
 			</div>
-			<h2 className="text-3xl font-bold text-[#28293B] mt-10">{`image${id}`}</h2>
-			<h2 className="text-2xl text-[#28293B] mt-5">2023-11-17:14:27:00:00</h2>
+			<h2 className="text-3xl font-bold text-[#28293B] mt-10">{`${id}`}</h2>
+			<h2 className="text-2xl text-[#28293B] mt-5">{image.createdAt}</h2>
+			<button
+				className="text-2xl bg-red-400 text-center text-white font-bold p-3 mt-5 rounded-[10px]"
+				onClick={handleDeleteImage}
+			>
+				Delete
+			</button>
 		</div>
 	)
 }

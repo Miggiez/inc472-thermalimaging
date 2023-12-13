@@ -6,6 +6,8 @@ router.get("/:id", image.getImage)
 
 router.post("/newimage", image.postImage)
 
-router.get("/", image.getAllImage)
+router.delete("/deleteimage/:id", image.deleteImage)
+
+router.post("/", image.getAllImage)
 
 module.exports = router

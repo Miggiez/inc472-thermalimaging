@@ -4,14 +4,16 @@ import { Cards } from "../components/Cards"
 
 export const Homepage = (props) => {
 	const [data, setData] = useState([])
+	const [search, setSearch] = useState("")
 
 	const handleFetch = async () => {
 		try {
 			const res = await fetch(`http://localhost:5100/images/`, {
-				method: "GET",
+				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
+				body: JSON.stringify({ search: search }),
 			})
 			res.json().then((data) => {
 				setData(data)
@@ -27,11 +29,11 @@ export const Homepage = (props) => {
 
 	useEffect(() => {
 		handleFetch()
-	}, [])
+	}, [search])
 
 	return (
 		<div className="flex flex-col items-center justify-center overflow-x-hidden">
-			<SearchBar />
+			<SearchBar search={setSearch} />
 			<div className="mt-10 w-[100%] md:flex md:justify-center">
 				<h2 className="text-xl font-bold text-[#28293B] relative left-10 md:static">
 					Images
